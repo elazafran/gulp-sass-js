@@ -1,6 +1,6 @@
 
 
-$dark-color : #fabada; 
+$dark-color : #555; 
 
 body {
   background: $dark-color; 
@@ -9,3 +9,22 @@ body {
 h1 {
   color: #F1F1F1;
 } 
+
+img {
+	width:100%;
+}
+
+.facebookLista > div {
+  padding: 6px;
+  margin-bottom: 10px;
+  background: #fff;
+  border-radius: 6px;
+}
+
+.indivualComentario {
+	.fecha,.comentarios {
+		margin-bottom: 0px;
+		
+	}
+	
+}

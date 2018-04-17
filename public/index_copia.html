@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
+<script  src="https://code.jquery.com/jquery-1.12.4.js"  integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="  crossorigin="anonymous"></script> 
+
+
+</head>
+
+<body>
+  <script>
+  
+  jQuery(document).ready(function($) {
+    var viejosID=[    
+              "263647760354133_1886776001374626",
+              "263647760354133_1884192201633006",
+              "263647760354133_1883838715001688",
+              "263647760354133_1883833621668864",
+              "263647760354133_1882720051780221"
+            ];
+    var nuevosID=[    
+              "111111",
+              "2222222",
+              "263647760354133_1886776001374626",
+              "263647760354133_1884192201633006",
+              "263647760354133_1883838715001688"
+              ];
+    var resultado = [];
+    var items_a_eliminar = [];
+    
+    anadirViejos();
+    comparar();
+    
+    function comparar(){
+      $.each(viejosID, function(i, val){
+          if($.inArray(val, nuevosID) < 0){
+              items_a_eliminar.push(val);
+          }
+      });
+      console.log("ID´s a eliminar \n"+items_a_eliminar);
+      borrarVariorsElementosArray(items_a_eliminar);
+      //console.log(resultado);
+      
+    }
+  
+    //la mejor manera para realizar un borrado múltiple de un Array debe ser de esta maner
+    // eliminamos de atrás
+    function borrarVariorsElementosArray(items_a_eliminar){
+        for(var i = 0; i<items_a_eliminar.length ;i++){
+            //console.log('borramos \n'+ items_a_eliminar[i]);
+            $('#'+items_a_eliminar[i]).remove();
+        }
+        anadirNuevos();
+        return viejosID;
+    }
+    // pintamos los viejosId 
+    function anadirViejos(){
+      
+      //añanidosmo los viejos
+        viejosID.forEach( function(elemento, index) {
+          jQuery('.facebookLista').append('<div id="'+viejosID[index]+'">'+viejosID[index]+'</div>');  
+        });
+    }
+    // añadimos los nuevos
+    function anadirNuevos(){
+      
+      //recorrremos cuantos haya que eliminar y añadimos del array nuevosID JSON
+        console.log(viejosID);
+        items_a_eliminar.forEach( function(elemento, index) {
+            viejosID.unshift(nuevosID[index]);
+            jQuery('.facebookLista').prepend('<div id="'+nuevosID[index]+'">'+nuevosID[index]+'</div>');  
+        });
+    }
+  });
+</script> 
+
+<div class="container">
+  <div class="row">
+    <div class="col-md">
+      <h1>Feed de facebook </h1>
+      <div class="facebookLista">  </div>
+      
+    </div> 
+  </div>
+</div>
+</body>
+</html>

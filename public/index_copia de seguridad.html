@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
+<script
+  src="https://code.jquery.com/jquery-1.12.4.js"
+  integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
+  crossorigin="anonymous"></script> 
+
+
+</head>
+
+<body>
+	<script>
+	
+		/*var viejosID=[		"263647760354133_1886776001374626",
+							"263647760354133_1884192201633006",
+							"263647760354133_1883838715001688",
+							"263647760354133_1883833621668864",
+							"263647760354133_1882720051780221"
+						];
+		var nuevosID=[		"111111",
+							"2222222",
+							"263647760354133_1883838715001688",
+							"263647760354133_1883833621668864",
+							"263647760354133_1882720051780221"
+		];*/
+		var resultante = [];
+		var viejosID=[];
+		var nuevosID=[];
+		var totalId=[];
+	$( document ).ready(
+
+		function leerFeed() {
+
+		
+		
+
+		jQuery.ajax({
+
+            url: "https://graph.facebook.com/v2.12/Javier.Aliaga.Rodriguez?fields=feed{id,message,description,picture,permalink_url,full_picture,comments.limit(10)}&access_token=EAACEdEose0cBAHWbJQH5EEygNn2qXgBLn0FpGXb7ByG6lVjRvep4kTHViZCI0lN8GKiv7ovpICZBIM0P3c32IErTTwLynS5hi0rJxotx8AGqpgfeChrnQ3Q35wZBZACf8Kh0goUOU1LNLbWh0GWRvh5c8QJRfolDjcEWaNxpmKfV7tncEbVKIBumQdUnneUZD",
+            //https://graph.facebook.com/v2.12/Javier.Aliaga.Rodriguez?fields=feed{id,message,description,picture,permalink_url,full_picture,comments.limit(10)}&access_token=EAACEdEose0cBALFZAVfZBeZBbKmYH4zT1FZBQqCmo65SkD3mQ6EAAvNeNDnAl6oUv3N0hygiRYoFbslw8ZAKJZBfCxHu5Q9HEWM8BTze29ZBTpZCqDsVhxVUV39kkbFkDGZBjzp7ZAZCDxoNfAhk8Ef2WanxFTamkdXcVm3gopVA4NE5om59YYeuWJGfPRUtmyFTTgZD
+            // The name of the callback parameter, as specified by the YQL service
+            jsonp: "callback",
+            // Tell jQuery we're expecting JSONP
+            dataType: "jsonp",
+            // Work with the response
+			success: function( response ) {
+              // guardamos el tamaño del feed que nos llega
+                var tamanio = response['feed']['data'].length;
+                //console.log(tamanio);
+                
+                
+                
+
+                //  sino tenemos información array viejosID
+               	if (viejosID<1){
+	                for (var i = 0; i < tamanio; i++) {
+	                	viejosID.push(response['feed']['data'][i]['id']);
+	                	console.log(" esto es id viejo " +response['feed']['data'][i]['id']);
+
+	                }
+	                console.log("---------------------- VIEJOS -------------------------");
+	                console.log(viejosID);
+	                console.log("---------------------------------------------------");
+	            //cargamos rellenamos el nuevo array si ya tenemos información
+                }else {
+                	console.log("---------------------- NUEVOS ------------------------");
+                	nuevosID.push(response['feed']['data'][i]['id'])
+                	console.log(" esto es id nuevo " +response['feed']['data'][i]['id'])
+                	console.log("---------------------------------------------------");
+                }
+
+                comparar(viejosID,nuevosID);
+
+                
+                function pintar (){
+                	
+                  //for(var i in response['feed']['data']) {
+                    for (var i=0;i<tamanio;i++){
+                      var ainsertar = '';
+                		
+                          if (response['feed']['data'][i]['id'])
+
+                          {
+                            // ainsertar+="<div id='"+response['feed']['data'][i]['id']+"'></div>";
+                            ainsertar+="<div id='"+response['feed']['data'][i]['id']+"'>";
+                            //console.log("id =>>>>> "+response['feed']['data'][i]['id']);
+                          }
+
+                          if (response['feed']['data'][i]['full_picture'])
+                          {
+
+                            ainsertar+="<img class='img-fluid' src="+response['feed']['data'][i]['full_picture']+">";
+                          }
+
+                          if (response['feed']['data'][i]['message'])
+
+                          {
+
+                            ainsertar+='<p>'+response['feed']['data'][i]['message']+'</p>';
+
+                          }
+
+                          if (response['feed']['data'][i]['description'])
+
+                          {
+
+                            ainsertar+='<h3>'+response['feed']['data'][i]['description']+'</h3>';
+
+                          }
+
+                          if (response['feed']['data'][i]['comments'])
+
+                          {
+
+                            comentarios = response['feed']['data'][i]['comments']['data'].length;
+
+                            var listarComentarios='';
+
+                            for(var k=0;k<comentarios;k++){
+
+                              var fechaComentario = response['feed']['data'][i]['comments']['data'][k]['created_time'];
+                              var dt = new Date(fechaComentario);
+                              //extraemos el día mes y año
+                              var dia = dt.getDate();
+                              var mes = parseInt(dt.getMonth()) + 1;
+                              var ano = dt.getFullYear();
+                              var horas = dt.getHours();
+                              var minutos = dt.getMinutes();
+                              //escribimos la fecha en un formato legible
+                              listarComentarios+='<div class="indivualComentario"><p class="fecha">'+dt.toLocaleString('es-ES', { hour: 'numeric', minute: 'numeric', hour12: true })+'</p><p class="comentarios">'+response['feed']['data'][i]['comments']['data'][k]['message']+'</p></div>';
+                          } 
+                            ainsertar+=listarComentarios;
+
+                          }else {
+                            console.log("NOOOOOOOOOOOOOOO hay comentarios en este post");
+                          }
+
+                          ainsertar+='<hr>';
+                          jQuery('.facebookLista').append(ainsertar);
+                    }
+                }
+                pintar();
+                //console.log("resultado de la comparacion \n"+comparar(viejosID,nuevosID));
+
+              /*  viejosID.forEach( function(element, index) {
+                	console.log("elementos => \n "+index+element);
+                });
+			*/		 
+					
+
+            }
+        });
+		
+			
+		
+		//comparar();
+		
+		function comparar(){
+			
+			var items_a_eliminar = Array();
+      //console.log("asdfdasfdfsdfasdfs " + viejosID);
+      //console.log("nuesoooooooooooossss  " + nuevosID);
+		    $.each(viejosID, function(i, val){
+		    	
+			      if($.inArray(val, nuevosID) < 0){
+			          items_a_eliminar.push(val);
+			         // console.log(val);
+               console.log("esto es lo que hay "+items_a_eliminar);
+
+			      }
+			     
+			      
+		    });
+
+		    console.log("ID´s a eliminar \n"+items_a_eliminar);
+		    var resultado = borrarVariorsElementosArray(items_a_eliminar);
+		    return resultado;
+		}
+
+		//la mejor manera para realizar un borrado múltiple de un Array debe ser de esta maner
+		// eliminamos de atrás
+
+		function borrarVariorsElementosArray(items_a_eliminar){
+		    for(var i = 0; i<items_a_eliminar.length ;i++){
+		    		console.log('borramos \n'+ items_a_eliminar[i]);
+		    		$(items_a_eliminar[i]).remove();
+		            viejosID.splice(i,1);
+
+		    }
+		    anadirNuevos(items_a_eliminar);
+		    return viejosID;
+		}
+		
+		function anadirNuevos(items_a_eliminar){
+			
+			//recorrremos cuantos haya que eliminar y añadimos del array nuevosID JSON
+			items_a_eliminar.forEach( function(elemento, index) {
+
+				//viejosID.unshift('añadido => ' + index + " "+ nuevosID[index]);
+				viejosID.unshift(nuevosID[index]);
+			});
+			//console.log(viejosID);
+		}
+		setTimeout(leerFeed,1000);
+	});
+
+</script>	
+<div class="container">
+  <div class="row">
+    <div class="col-md">
+    	<h1>Feed de facebook </h1>
+      <div class="facebookLista"></div>
+      <style>
+      img {
+        margin-bottom: 10px;
+      }
+        /**{border:1px solid red;}*/
+      
+      </style>
+    </div>
+  </div>
+</div>
+</body>
+</html>

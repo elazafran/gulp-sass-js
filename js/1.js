@@ -10,14 +10,14 @@ var almacenID=[];
 //alert(almacenID);
 function leer_json_facebook(){
 
-			
+      
 
             // recogemos el token del input oculto uqe usamos para traernos del backend los datos
             var tokenLimit = 2;
             var tokenPage = "Javier.Aliaga.Rodriguez";
 
             //var tokenPage = "boutiqueamiaire";
-            var tokenfacebook="EAACEdEose0cBAP2fBPvZCglljZAHBmf6HoWKETZCVZC6KXIiFKFXXnQZCOZAIF7b6S8XsVrEzgk3Gk50jN2RXxoh3vmCHRJjO2mveSsJItxDw9ZArccHDYjFfAvBVYv2NRKpogT5HI8IdFRYojaEe7tZBPXZBOhxMgjp1CiQ0tfZCTXHiVzb6yGBcJLoDva2AXxaYZD";
+            var tokenfacebook="EAACEdEose0cBAEhekRHn24OsT9d4gUjZAwpZAe5oJ9fZBXOeYeYNV0srQGKFKZAExqXBubZADyHZC3OisQZBY884RLEg1TlZCiVGbcgERmje8PtDjZAZAG1DkuPPDgbaAMrmdhmLSH4zc7h8z9nBCqyQ7Yt1q5zZAUJkmGZBnl6B6iMiT8DjCH06PcERwEevmDHZCgJ4ZD";
 
             //alert(tokenfacebook);
 
@@ -38,7 +38,7 @@ function leer_json_facebook(){
 
                 success: function( response ) {
 
-                	// guardamos el tamaño del feed que nos llega
+                  // guardamos el tamaño del feed que nos llega
                     var tamnio = response['feed']['data'].length;
  
                     // creamos un array para guardar los objetos de cada feed
@@ -47,58 +47,58 @@ function leer_json_facebook(){
                     
                     // si no exite almacenID lo crea e insertamos id
                     if(almacenID.length <1){
-	                    for (var i = 0 ; i < response['feed']['data'].length; i++) {
-						
-	                            almacenID.push(response['feed']['data'][i]['id']);
-	                            //console.log("rellenamos almacenID =>" +response['feed']['data'][i]['id'] );
-						}
+                      for (var i = 0 ; i < response['feed']['data'].length; i++) {
+            
+                              almacenID.push(response['feed']['data'][i]['id']);
+                              //console.log("rellenamos almacenID =>" +response['feed']['data'][i]['id'] );
+                          }
 
-						
-						//alert('entramos');
+             
+            //alert('entramos');
 
                     }else {
-                    	var encuentra = false;
-                    	for (var i = 0 ; i < response['feed']['data'].length; i++) {
-						
-	                            nuevosID.push(response['feed']['data'][i]['id']);
-	                            //console.log("recorremos de nuevo =>" +response['feed']['data'][i]['id'] );
-						}
-                    	//alert('entramos');
-                    	//comparamos los dos arrays uno con los datos nuevos y los guardamos
-                    	
-                    	for (x=0;x<almacenID.length;x++) { 
-                    		//alert("iguales") ;
-                    		encuentra = false;
-							for (y=0;y<nuevosID.length;y++) 
-							{ 
-								if (almacenID[x].c == nuevosID[y]) 
-								{ 
-									encuentra = true;
-             						break;
-									console.log(almacenID[x] + ' son iguales' +  nuevosID[y])
+                      var encuentra = false;
+                      for (var i = 0 ; i < response['feed']['data'].length; i++) {
+            
+                              nuevosID.push(response['feed']['data'][i]['id']);
+                              //console.log("recorremos de nuevo =>" +response['feed']['data'][i]['id'] );
+            }
+                      //alert('entramos');
+                      //comparamos los dos arrays uno con los datos nuevos y los guardamos
+                      
+                      for (x=0;x<almacenID.length;x++) { 
+                        //alert("iguales") ;
+                        encuentra = false;
+              for (y=0;y<nuevosID.length;y++) 
+              { 
+                if (almacenID[x].c == nuevosID[y]) 
+                { 
+                  encuentra = true;
+                        break;
+                  console.log(almacenID[x] + ' son iguales' +  nuevosID[y])
 
-								} else {
-									console.log("distintos debemos añadir") ;
-								}
-							} 
-							if(!encuentra){
-						       alert("los arreglos no son iguales");
-						       break;
-						    }
-						} if(encuentra){
-							    alert("si son iguales");
-							}
-                    	
+                } else {
+                  console.log("distintos debemos añadir") ;
+                }
+              } 
+              if(!encuentra){
+                   alert("los arreglos no son iguales");
+                   break;
+                }
+            } if(encuentra){
+                  alert("si son iguales");
+              }
+                      
                     }
                     
                     function recorrerElementos (){
-                    	var resultado = []
-                    	for (var i = 0 ; i < response['feed']['data'].length; i++) {
-						
-	                            resultado.push(response['feed']['data'][i]['id']);
-	                            console.log("rellenamos nuevo array=>" +response['feed']['data'][i]['id'] );
-						}
-                    	return resultado;
+                      var resultado = []
+                      for (var i = 0 ; i < response['feed']['data'].length; i++) {
+            
+                              resultado.push(response['feed']['data'][i]['id']);
+                              console.log("rellenamos nuevo array=>" +response['feed']['data'][i]['id'] );
+            }
+                      return resultado;
                     }
                     
                     var contador = 0;
@@ -250,7 +250,7 @@ function leer_json_facebook(){
 
 
 
-                          }	
+                          } 
 
 
 
@@ -263,17 +263,14 @@ function leer_json_facebook(){
 
                           }else {
 
-                            //console.log("NOOOOOOOOOOOOOOO hay");
+                            console.log("NOOOOOOOOOOOOOOO hay");
 
 
                           }
 
  
                           ainsertar+='<hr>';
-                          //jQuery('.facebookLista').append(ainsertar);
-
-                         
-
+                          jQuery('.facebookLista').append(ainsertar);
 
 
                     }
@@ -285,6 +282,3 @@ function leer_json_facebook(){
               });
 
           }
-
-
-

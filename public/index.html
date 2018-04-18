@@ -9,7 +9,7 @@
 
 <script  src="https://code.jquery.com/jquery-1.12.4.js"  integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="  crossorigin="anonymous"></script> 
 <link rel="stylesheet" href="css/styles.css">
-
+ 
 </head>
 
 <body>
@@ -21,12 +21,12 @@
     
   });
   var viejosID=[];
-  var nuevoID=[];
+  var nuevoID=[]; 
 
   var nuevosID=[];
   var resultado = [];
   var items_a_eliminar = [];
-  var contador=0;
+  var contador=0;  
 
 function leer() { 
 
@@ -35,12 +35,12 @@ function leer() {
     function leer_json_facebook(){
       
         $.ajax({
-          url: "https://graph.facebook.com/v2.12/Javier.Aliaga.Rodriguez?fields=feed{description,picture,permalink_url,full_picture,comments},likes,description&access_token=EAACEdEose0cBAF6UkURGQo1L6ETYAUNwnRZAuP9wxTGghDrNAcE8iBQsmdCLEQk5NZCigB6xZB2vPbmYecVy0L2Ml6EANwW20QatcYtxtfEPUmwuXstXeXfAQL6YBMokcKWIQL0eArAVizq46NTPER7jnKKE651G2ZBP5mYg8vYN8DAYoJqBYJIfw7SZCl7AZD",
+          url: "https://graph.facebook.com/v2.12/Javier.Aliaga.Rodriguez?fields=feed{description,picture,permalink_url,full_picture,comments},likes,description&access_token=EAACEdEose0cBAG6DD6xad1OBVHccx8UAdSCNZBdPWfqJa12DYVwOVWo4MqfbMEs2Is1EBlUwEMRNcAh8T7uLT6bE2lCZCzSuHfehp21Bd99mWFqK5xGEiHhHZCUquTAZBzqNYjZCg8MieREXTcEJnS3eQpHXZAuHmFb7qN68NZAjEYC0xhdRzJMGqmJgNJRT7cZD",
           jsonp: "callback",
           dataType: "jsonp",        
           success: function(response){
             respuestaAJAX(response);
-            console.log(response);
+            console.log(response); 
         }
       });
     } //cierre del ajax
@@ -92,7 +92,7 @@ function leer() {
       }
 
       if (viejosID.length==nuevosID.length){
-  		  $.each(viejosID, function(i, val){
+  		  $.each(viejosID, function(i, val){ 
   	    	  if($.inArray(val, nuevosID) < 0){
                 contador++;
   		          items_a_eliminar.push(val); 

@@ -17,9 +17,9 @@
 
 	$(document).ready(function(){
     leer();
-    setInterval(leer, 10000);
+     setInterval(leer, 10000);
     
-});
+  });
   var viejosID=[];
   var nuevoID=[];
 
@@ -35,11 +35,12 @@ function leer() {
     function leer_json_facebook(){
       
         $.ajax({
-          url: "https://graph.facebook.com/v2.12/Javier.Aliaga.Rodriguez?fields=feed.limit(5){description,picture,permalink_url,full_picture,comments}&access_token=EAACEdEose0cBAEaDZBxdGZADspBfHqEZALRuPEY5feB5J7vJ9VCbGB91a2hg9liEPjrfZAemhtnLu9Vw9nuh8cKplYNEgPZCCoZAe8aV6Ddjv6NJRrcOQgdyq1AewFZAT1335JtOtMtjXkzT8jcZAaxSvuGmY8ZCO4CGD7xU2ukZBMxkHHZAGykhLF95NDMgXM8nJoZD",
+          url: "https://graph.facebook.com/v2.12/Javier.Aliaga.Rodriguez?fields=feed{description,picture,permalink_url,full_picture,comments},likes,description&access_token=EAACEdEose0cBAF6UkURGQo1L6ETYAUNwnRZAuP9wxTGghDrNAcE8iBQsmdCLEQk5NZCigB6xZB2vPbmYecVy0L2Ml6EANwW20QatcYtxtfEPUmwuXstXeXfAQL6YBMokcKWIQL0eArAVizq46NTPER7jnKKE651G2ZBP5mYg8vYN8DAYoJqBYJIfw7SZCl7AZD",
           jsonp: "callback",
           dataType: "jsonp",        
           success: function(response){
             respuestaAJAX(response);
+            console.log(response);
         }
       });
     } //cierre del ajax
@@ -51,7 +52,7 @@ function leer() {
 
         // recorremos el json y guardamos los id 
         if (1>viejosID.length){
-          console.log("rellenamos");
+          //console.log("rellenamos");
           for (var i = 0; i < response['feed']['data'].length; i++) {
               viejosID.push(response['feed']['data'][i]['id']);
           }
@@ -70,8 +71,8 @@ function leer() {
           volverApintar=comparar();  
         }
         
-        //anadirViejos();
-        console.log("volverApintar "+volverApintar);
+        
+        //console.log("volverApintar "+volverApintar);
         if (!volverApintar)
           pintar(response);
        
@@ -80,11 +81,11 @@ function leer() {
     
     
 		function comparar(){
-      //alert("message?: DOMString");
-      console.log("nuevos \n "+nuevosID);
+      
+     /* console.log("nuevos \n "+nuevosID);
       console.log("viejos \n "+viejosID);
       console.log("--------------------------------");
-
+      */
       //limpiamos array
       while(items_a_eliminar.length) {
               items_a_eliminar.pop();
@@ -95,7 +96,7 @@ function leer() {
   	    	  if($.inArray(val, nuevosID) < 0){
                 contador++;
   		          items_a_eliminar.push(val); 
-                console.log("diferencias =>"+val)
+                //console.log("diferencias =>"+val)
   		      }
   		  });
         //si la longuitud es distinta
@@ -103,13 +104,13 @@ function leer() {
           $.each(viejosID, function(i, val){
             if($.inArray(val, nuevosID) < 0){
                 items_a_eliminar.push(val); 
-                console.log("diferencias =>"+val)
+                //console.log("diferencias =>"+val)
             }
         });
       }
-      console.log("ID´s a eliminar \n"+items_a_eliminar);
+      //console.log("ID´s a eliminar \n"+items_a_eliminar);
 	    borrarVariorsElementosArray(items_a_eliminar);
-      console.log(resultado);
+      //console.log(resultado);
 
       if (0==items_a_eliminar.length)
         resultado=true;
@@ -127,7 +128,7 @@ function leer() {
         for(var i = 0; i<items_a_eliminar.length ;i++){
 		    		console.log('borramos \n'+ items_a_eliminar[i]);
 		    		$('#'+items_a_eliminar[i]).remove();
-            //alert("borramos elmenots")
+            
 		    }
         if (0<items_a_eliminar.length)
 		      anadirNuevos();
@@ -138,13 +139,13 @@ function leer() {
     // añadimos los nuevos
 		function anadirNuevos(){
 			//recorrremos cuantos haya que eliminar y añadimos del array nuevosID JSON
-        console.log("para borrar=> "+items_a_eliminar);
-        console.log("estos son los viejos "+viejosID);
+        //console.log("para borrar=> "+items_a_eliminar);
+        //console.log("estos son los viejos "+viejosID);
   			items_a_eliminar.forEach( function(elemento, index) {
             viejosID.unshift(nuevosID[index]);
             viejosID.pop(items_a_eliminar[index]);
-            //jQuery('.facebookLista').prepend('<div id="'+nuevosID[index]+'">'+nuevosID[index]+'</div>');
-            console.log("aaaaaaaaaaaaaaaaa" + viejosID.length);
+            
+            //console.log("aaaaaaaaaaaaaaaaa" + viejosID.length);
         });
 
     }
@@ -152,7 +153,7 @@ function leer() {
     function pintar (response){
        if(nuevosID.length==0){
         //primer evento y se imprimen todos
-        console.log('esto hay uqe pintar ' + response['feed']['data'].length);
+        //console.log('esto hay que pintar ' + response);
           
             for (var i=0;i<response['feed']['data'].length;i++){
               var ainsertar = '';
@@ -182,8 +183,8 @@ function leer() {
               if (response['feed']['data'][i]['description'])
 
               {
-
-                ainsertar+='<h3>'+response['feed']['data'][i]['description']+'</h3>';
+                //console.log('hay description ' +response['feed']['data'][i]['description'])
+                ainsertar+='<h5>'+response['feed']['data'][i]['description']+'</h5>';
 
               }
 
@@ -207,11 +208,18 @@ function leer() {
                   var minutos = dt.getMinutes();
                   //escribimos la fecha en un formato legible
                   listarComentarios+='<div class="indivualComentario"><p class="fecha">'+dt.toLocaleString('es-ES', { hour: 'numeric', minute: 'numeric', hour12: true })+'</p><p class="comentarios">'+response['feed']['data'][i]['comments']['data'][k]['message']+'</p></div>';
+
+                  // comentarios anidados
+                  if (response['feed']['data'][i]['comments']){
+                    for(var j=0;j<comentarios;j++){
+
+                    }
+                  } // fin de comentarios anidados
               } 
                 ainsertar+=listarComentarios;
 
               }else {
-                console.log("NOOOOOOOOOOOOOOO hay comentarios en este post");
+                //console.log("NOOOOOOOOOOOOOOO hay comentarios en este post");
               }
 
               ainsertar+='<hr>';
@@ -220,13 +228,8 @@ function leer() {
           
        } else {
 
-          console.log('hay nuevosID');
+            //console.log('hay nuevosID');
             //cuando se han ido actualizando, sólo agregar los nuevos
-            /*nuevosID.each(function(index, el) {
-
-            });*/
-
-        
             for (var i=0;i<contador;i++){
                   if (response['feed']['data'][i]['id']){
                     var ainsertar = '';
@@ -241,16 +244,7 @@ function leer() {
             }
           
        }//cierre del else
-
-
-      
-  }
-
-  
-  
-
-    
-
+    }
 }
           
 
